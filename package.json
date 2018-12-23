@@ -1,0 +1,17 @@
+{
+    "name": "AngularJS",
+    "version": "1.0.0",
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
+    "author": "svgan",
+    "contributors": [],
+    "dependencies": {
+        "body-parser": "latest",
+        "express": "^4.16.4"
+    }
+}
