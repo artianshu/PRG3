@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Angular JS Application</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <!--<script src="AngularJSFiles/angular.js"></script>
+  <script src="JQueryFiles/jquery.js"></script>-->
+</head>
+<body style="background-color:silver">
+  <center>
+    <div style="background-color:white ">
+      <h1 style='color:blue'>EMPLOYEE DETAILS</h1><hr>
+    </div>
+    <div ng-app="mainApp" data-ng-controller="CRUDOperations">
+      <div style="font-weight:bold;background-color:silver">
+        <table>
+          <tr>
+            <td>Employee Id : </td>
+            <td><input type="text" data-ng-model="EmpModel.eid"/></td>
+          </tr>
+          <tr>
+            <td>Name : </td>
+            <td><input type="text" data-ng-model="EmpModel.name"/></td>
+          </tr>
+          <tr>
+            <td>Sex : </td>
+            <td><input type="radio" name="male" value="Male" data-ng-model="EmpModel.sex"/>Male</td>
+            <td><input type="radio" name="female" value="Female" data-ng-model="EmpModel.sex"/>Female</td>
+          </tr>
+          <tr>
+            <td>Designation : </td>
+            <td><input type="text" data-ng-model="EmpModel.desg"/></td>
+          </tr>
+          <tr>
+            <td>Department : </td>
+            <td><input type="text" data-ng-model="EmpModel.dept"/></td>
+          </tr>
+          <tr>
+            <td>Salary: </td>
+            <td><input type="number" data-ng-model="EmpModel.salary"/></td>
+          </tr>
+          <tr align="center">
+            <td colspan='2' align="center"><input type="button" style="background-color:green;color:white" value="Save Data" data-ng-click="AddData()"/></td>
+          </tr>
+          <tr align="center">
+            <td colspan='2' align="center"><input type="button" value="Update Data" style="background-color:blue;color:white" data-ng-click="UpdateData()"/></td>
+          </tr>
+        </table>
+            <br>
+            </div>
+            <br>
+            <!-- <div style="background-color:silver"> -->
+      <table border='1'width=80% height=100% >
+        <thead style="background-color:blue;color:white">
+          <th>Employee Id</th>
+          <th>Name</th>
+          <th>Sex</th>
+          <th>Designation</th>
+          <th style="color:yellow">Department</th>
+          <th>Salary</th>
+        </thead>
+        <tr data-ng-repeat="emp in EmployeeList" data-ng-click="BindSelectedData(emp)" style="background-color:white;color:;font-weight:bold">
+          <td>{{ emp.eid }}</td>
+          <td>{{ emp.name }}</td>
+          <td>{{ emp.sex }}</td>
+          <td>{{ emp.desg }}</td>
+          <td style="color:red">{{ emp.dept }}</td>
+          <td>{{ emp.salary }}</td>
+          <td align="center"><input type="button" value="Delete" data-ng-click="DeleteData(emp)" style="background-color:red;color:white"/></td>
+        </tr>
+      </table></div>
+    <!-- </div> -->
+  </center>
+
+  <script type="text/javascript">
+  var app = angular.module("mainApp", []);
+  app.controller('CRUDOperations', function($scope){
+    $scope.EmpModel = {
+      eid : '',
+      name : '',
+      sex : '',
+      desg : '',
+      dept : '',
+      salary : '',
+    };
+    $scope.EmployeeList = [];
+    $scope.AddData = function(){
+      var employee = {
+        eid : $scope.EmpModel.eid,
+        name : $scope.EmpModel.name,
+        sex : $scope.EmpModel.sex,
+        desg : $scope.EmpModel.desg,
+        dept : $scope.EmpModel.dept,
+        salary : $scope.EmpModel.salary
+      };
+      $scope.EmployeeList.push(employee);
+      ClearModel();
+    };
+    $scope.DeleteData = function(employee){
+      var index = $scope.EmployeeList.indexOf(employee);
+      $scope.EmployeeList.splice(index, 2);
+    };
+    $scope.BindSelectedData = function(emp){
+      $scope.EmpModel.eid = emp.eid;
+      $scope.EmpModel.name = emp.name;
+      $scope.EmpModel.sex= emp.sex;
+      $scope.EmpModel.desg = emp.desg;
+      $scope.EmpModel.dept = emp.dept;
+      $scope.EmpModel.salary = emp.salary;
+    };
+    $scope.UpdateData = function(){
+      $.grep($scope.EmployeeList, function(e){
+        if(e.eid === $scope.EmpModel.eid){
+          e.name =$scope.EmpModel.name;
+          e.sex =$scope.EmpModel.sex;
+          e.desg =$scope.EmpModel.desg;
+          e.dept =$scope.EmpModel.dept;
+          e.salary =$scope.EmpModel.salary;
+        }
+      });
+      ClearModel();
+    };
+    function ClearModel(){
+      $scope.EmpModel.eid ='';
+      $scope.EmpModel.name = '';
+      $scope.EmpModel.sex= '';
+      $scope.EmpModel.desg = '';
+      $scope.EmpModel.dept = '';
+      $scope.EmpModel.salary = '';
+    }
+  });
+  </script>
+</body>
+</html>
